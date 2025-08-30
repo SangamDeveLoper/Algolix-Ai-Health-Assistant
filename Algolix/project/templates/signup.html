@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - ALGOLIX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Removed bg-gradient class from container div since background is now on body -->
+    <div class="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+        <!-- Snow Effect -->
+        <div id="snow-container" class="absolute inset-0 pointer-events-none"></div>
+        
+        <!-- Background Orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
+        <!-- Signup Container -->
+        <div class="auth-container">
+            <!-- Title -->
+            <h2 class="auth-title">Create your account</h2>
+            <p class="auth-subtitle">Join the future of AI-powered health assistance</p>
+
+            <!-- Form -->
+            <form method="POST" class="auth-form" action="{{ url_for('signup') }}">
+                <!-- Username Input -->
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Email Input -->
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email address"
+                            class="form-input"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            class="form-input password-input"
+                            required
+                            minlength="6"
+                        >
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i id="password-icon" class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <a href="{{ url_for('login_page') }}" class="submit-btn">
+    <span class="btn-text">Get Started</span>
+    <div class="btn-ripple"></div>
+    <div class="btn-glow"></div>
+</a>
+<style>
+    /* Base button styling */
+    .submit-btn {
+        font-family: 'Rajdhani', sans-serif; /* Consistent with your welcome.html */
+        font-weight: 600;
+        font-size: 1.2rem;
+        padding: 1rem 2.5rem; /* Adjust padding as needed */
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6); /* Primary gradient background */
+        border: none;
+        border-radius: 50px; /* Fully rounded corners */
+        color: white;
+        cursor: pointer;
+        display: inline-flex; /* Allows icon and text to align */
+        align-items: center;
+        justify-content: center;
+        position: relative; /* Essential for ripple and glow positioning */
+        overflow: hidden; /* Hides parts of ripple/glow outside the button */
+        text-decoration: none; /* Remove underline from anchor tag */
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); /* Initial subtle shadow */
+        transition: all 0.3s ease-in-out; /* Smooth transitions for hover effects */
+        isolation: isolate; /* Ensures z-index context for pseudo-elements */
+    }
+
+    .submit-btn:focus {
+        outline: none; /* Remove default focus outline */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 10px 20px rgba(59, 130, 246, 0.3); /* Enhanced focus ring */
+    }
+
+    /* Text inside the button */
+    .submit-btn .btn-text {
+        position: relative;
+        z-index: 2; /* Ensures text is above ripple/glow */
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Ripple effect (initial state) */
+    .submit-btn .btn-ripple {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5); /* White translucent ripple */
+        transform: scale(0);
+        opacity: 1;
+        animation: none; /* Reset animation state */
+        z-index: 1; /* Below text, above glow */
+        pointer-events: none; /* Ensures clicks pass through */
+    }
+
+    /* Glow effect (initial state) */
+    .submit-btn .btn-glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at center, rgba(139, 92, 246, 0.4) 0%, transparent 70%); /* Purple glow */
+        opacity: 0; /* Hidden by default */
+        transform: scale(0.8); /* Slightly scaled down */
+        transition: all 0.5s ease-in-out;
+        border-radius: 50px; /* Matches button border-radius */
+        z-index: 0; /* Behind everything */
+        pointer-events: none;
+    }
+
+    /* Hover effects for the button */
+    .submit-btn:hover {
+        transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
+        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.6); /* More prominent shadow */
+        background: linear-gradient(135deg, #4d95ff, #9f7aea); /* Slightly brighter gradient on hover */
+    }
+
+    /* Activate glow effect on button hover */
+    .submit-btn:hover .btn-glow {
+        opacity: 1; /* Show glow */
+        transform: scale(1.1); /* Expand glow */
+    }
+
+    /* Optional: Slight text animation on hover */
+    .submit-btn:hover .btn-text {
+        transform: scale(1.05); /* Make text slightly larger */
+    }
+
+    /* Keyframe for ripple animation (will be triggered by JavaScript) */
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4); /* Expand ripple significantly */
+            opacity: 0; /* Fade out */
+        }
+    }
+</style>
+            </form>
+
+            <!-- Divider -->
+            <div class="divider">
+                <span class="divider-text">or continue with</span>
+            </div>
+
+            <!-- Social Login Buttons -->
+            <div class="social-buttons">
+                <!-- Google Button -->
+                <button class="social-btn google-btn" onclick="signupWithGoogle()">
+                    <svg class="social-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span>Google</span>
+                    <div class="btn-ripple"></div>
+                </button>
+
+                <!-- GitHub Button -->
+                <button class="social-btn github-btn" onclick="signupWithGithub()">
+                    <svg class="social-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <span>GitHub</span>
+                    <div class="btn-ripple"></div>
+                </button>
+            </div>
+
+            <!-- Login Link -->
+            <div class="auth-link">
+                <span class="auth-text">Already have an account? </span>
+                <a href="login.html" class="auth-link-btn">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            overflow-x: hidden;
+            /* Added gradient background directly to body to cover full viewport */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Enhanced background orbs with ALGOLIX theme colors */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: -10%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            top: 50%;
+            right: -10%;
+            animation-delay: 3s;
+        }
+
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(45deg, #667eea, #533483);
+            bottom: -10%;
+            left: 30%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-30px) rotate(120deg) scale(1.1); }
+            66% { transform: translateY(20px) rotate(240deg) scale(0.9); }
+        }
+
+        /* Enhanced snow effect with multiple snowflake types */
+        .snowflake {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: snowfall linear infinite;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Auth Container */
+        .auth-container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border-radius: 28px;
+            padding: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            animation: slideUp 1s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Auth Title */
+        .auth-title {
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            margin-top: 0; /* Added margin-top: 0 to prevent spacing issues */
+        }
+
+        .auth-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        /* Form */
+        .auth-form {
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            z-index: 2;
+            transition: color 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 0 20px 0 56px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .form-input:focus + .input-icon,
+        .form-input:not(:placeholder-shown) + .input-icon {
+            color: #667eea;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Password Input */
+        .password-input {
+            padding-right: 56px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .password-toggle:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Updated submit button to match ALGOLIX "Get Started" styling */
+        .submit-btn {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #ffffff;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+            box-shadow: 0 16px 40px rgba(102, 126, 234, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .submit-btn:hover .btn-glow {
+            left: 100%;
+        }
+
+        /* Divider */
+        .divider {
+            position: relative;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .divider-text {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0 20px;
+            font-size: 14px;
+            position: relative;
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+        }
+
+        /* Social Buttons */
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .social-btn {
+            width: 100%;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icon {
+            flex-shrink: 0;
+        }
+
+        /* Ripple Effect */
+        .btn-ripple {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+
+        .social-btn:active .btn-ripple,
+        .submit-btn:active .btn-ripple {
+            transform: scale(1);
+        }
+
+        /* Auth Link */
+        .auth-link {
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .auth-text {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .auth-link-btn {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-link-btn:hover {
+            color: #764ba2;
+        }
+
+        .auth-link-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .auth-link-btn:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .auth-container {
+                max-width: 360px;
+                padding: 36px 28px;
+                margin: 20px;
+            }
+
+            .auth-title {
+                font-size: 36px;
+            }
+
+            .auth-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            
+            // Different snowflake characters for variety
+            const snowflakeChars = ['❄', '❅', '❆', '✦', '✧', '⋆'];
+            snowflake.innerHTML = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+            
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = Math.random() * 4 + 3 + 's';
+            snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+            snowflake.style.fontSize = Math.random() * 12 + 8 + 'px';
+            
+            // Add slight horizontal drift
+            snowflake.style.animationName = 'snowfall';
+            snowflake.style.setProperty('--drift', (Math.random() - 0.5) * 100 + 'px');
+
+            document.getElementById('snow-container').appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 7000);
+        }
+
+        // Create snowflakes more frequently for hackathon effect
+        setInterval(createSnowflake, 200);
+
+        // Password Toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('password-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // Social Login Functions
+        function signupWithGoogle() {
+            console.log('Signing up with Google...');
+            // Add your Google OAuth logic here
+        }
+
+        function signupWithGithub() {
+            console.log('Signing up with GitHub...');
+            // Add your GitHub OAuth logic here
+        }
+
+        // Enhanced Form Interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.querySelector('.auth-form');
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Prevent default form submission
+                
+                // Here you would normally validate and create account
+                // For demo purposes, we'll just redirect to chat
+                console.log('Signup form submitted');
+                
+                // Redirect to chat page
+                window.location.href = 'chat.html';
+            });
+
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.social-btn, .submit-btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = this.querySelector('.btn-ripple');
+                    if (ripple) {
+                        ripple.style.transform = 'scale(0)';
+                        setTimeout(() => {
+                            ripple.style.transform = 'scale(1)';
+                        }, 10);
+                    }
+                });
+            });
+
+            // Enhanced input focus animations
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'scale(1.02)';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'scale(1)';
+                });
+            });
+
+            // Add floating animation to auth container
+            const authContainer = document.querySelector('.auth-container');
+            let floatDirection = 1;
+            setInterval(() => {
+                authContainer.style.transform = `translateY(${Math.sin(Date.now() * 0.001) * 3}px)`;
+            }, 50);
+        });
+    </script>
+</body>
+</html>

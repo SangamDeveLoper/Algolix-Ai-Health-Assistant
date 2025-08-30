@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: algolix_health_assistant
+Version: 0.0.0
+Author: Sangam Gautam
+Author-email: gautamsangam500@gmail.com
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: license-file
