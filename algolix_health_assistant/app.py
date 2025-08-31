@@ -13,7 +13,7 @@ from pathlib import Path
 
 APP_FILE = Path(__file__).resolve()
 MEDICAL_CHATBOT_DIR = APP_FILE.parent.parent
-TEMPLATE_DIR = (MEDICAL_CHATBOT_DIR / "Algolix" / "project" / "templates").resolve()
+TEMPLATE_DIR = (MEDICAL_CHATBOT_DIR / "algolix_health_assistant" /  "templates").resolve()
 
 print(f"[Flask] Using templates dir: {TEMPLATE_DIR}")
 
